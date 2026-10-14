@@ -2,25 +2,16 @@
 
 [![CI](https://github.com/duckenclaw/cpp-ci-template/actions/workflows/ci.yml/badge.svg)](https://github.com/duckenclaw/cpp-ci-template/actions/workflows/ci.yml)
 
-Starter for C++20 pet projects: CMake presets, Catch2 v3 + CTest, clang-format, clang-tidy,
+Starter for C++ pet projects: CMake presets, Catch2 v3 + CTest, clang-format, clang-tidy,
 ASan/UBSan, ccache, and a GitHub Actions matrix on Linux, macOS and Windows.
 
 ## Quick start
 
 ```bash
-cmake --workflow --preset dev        # configure + build + run all tests
+cmake --workflow --preset dev
 ```
 
-After the first build, `ctest --preset dev` re-runs the tests on their own.
-
-| Preset    | What it does                                                        |
-|-----------|---------------------------------------------------------------------|
-| `dev`     | Debug build + tests                                                 |
-| `release` | RelWithDebInfo build + tests                                        |
-| `asan`    | Debug build with AddressSanitizer + UndefinedBehaviorSanitizer + tests (not on Windows) |
-| `lint`    | Debug build with clang-tidy on every project source; any finding fails the build |
-
-Build trees land in `build/<preset>/`.
+After the first build, `ctest --preset dev` re-runs the tests on their own. Built trees land in `build/<preset>/`.
 
 ## Tooling
 
@@ -35,8 +26,8 @@ The pinned clang-format/clang-tidy versions match CI (see `env:` in
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml)), so local results equal CI results.
 
 ```bash
-clang-format -i $(git ls-files '*.cpp' '*.hpp')   # format everything
-cmake --workflow --preset lint                    # run clang-tidy
+clang-format -i $(git ls-files '*.cpp' '*.hpp')
+cmake --workflow --preset lint
 ```
 
 ccache is picked up automatically when it is on `PATH`.
@@ -72,8 +63,6 @@ cmake/          warnings, sanitizers, ccache, clang-tidy helpers
 | build-test    | Linux GCC, Linux Clang, macOS AppleClang, Windows MSVC (`dev`) |
 | ASan + UBSan  | Ubuntu, Clang (`asan` preset)                                 |
 
-There is no deploy job because this template is for native code, not web projects.
-
 ## Start a new project from this template
 
 1. On GitHub, click **Use this template** → **Create a new repository**.
@@ -82,7 +71,3 @@ There is no deploy job because this template is for native code, not web project
 4. Replace the example code in `src/` and `tests/`, and rename the `core`/`app` targets if you like.
 5. Push and confirm all CI jobs go green.
 
-## IDE
-
-CLion opens the folder directly, picks up `CMakePresets.json`, and uses `.clang-format` and
-`.clang-tidy`. VS Code works too, with the clangd and CMake Tools extensions.
